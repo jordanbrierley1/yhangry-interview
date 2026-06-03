@@ -1,0 +1,1 @@
+{"root":["./src/api.ts","./src/format.ts","./src/main.tsx","./src/types.ts","./src/components/chefcard.tsx","./src/components/header.tsx","./src/components/pagination.tsx","./src/pages/browsechefs.tsx","./src/pages/chefdetail.tsx","./src/pages/mybookings.tsx"],"version":"5.9.3"}

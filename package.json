@@ -1,0 +1,21 @@
+{
+  "name": "yhangry-interview-app",
+  "private": true,
+  "packageManager": "pnpm@10.32.0",
+  "scripts": {
+    "bootstrap": "pnpm --filter @yhangry/api run db:generate && pnpm --filter @yhangry/api run db:push && pnpm --filter @yhangry/api run seed",
+    "dev": "concurrently -n api,web -c blue,magenta \"pnpm --filter @yhangry/api run dev\" \"pnpm --filter @yhangry/web run dev\"",
+    "dev:api": "pnpm --filter @yhangry/api run dev",
+    "dev:web": "pnpm --filter @yhangry/web run dev",
+    "seed": "pnpm --filter @yhangry/api run seed",
+    "db:reset": "pnpm --filter @yhangry/api run db:reset",
+    "test": "pnpm --filter @yhangry/api run test",
+    "typecheck": "pnpm --filter @yhangry/api run typecheck && pnpm --filter @yhangry/web run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@prisma/client", "@prisma/engines", "prisma", "esbuild"]
+  }
+}

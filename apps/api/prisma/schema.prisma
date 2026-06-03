@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Customer {
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
+  bookings Booking[]
+}
+
+model Chef {
+  id                Int       @id @default(autoincrement())
+  name              String
+  bio               String
+  cuisines          String    // CSV, e.g. "Italian,Mediterranean"
+  location          String    // e.g. "London"
+  pricePerHeadPence Int
+  minSpendPence     Int
+  imageUrl          String
+  active            Boolean   @default(true)
+  menus             Menu[]
+  reviews           Review[]
+  bookings          Booking[]
+}
+
+model Menu {
+  id                Int    @id @default(autoincrement())
+  chefId            Int
+  chef              Chef   @relation(fields: [chefId], references: [id])
+  name              String
+  description       String
+  serviceStyle      String // "Seated & Plated" | "Buffet" | "Canapés" | "BBQ"
+  pricePerHeadPence Int
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  chefId     Int
+  chef       Chef     @relation(fields: [chefId], references: [id])
+  rating     Int      // 1..5
+  comment    String
+  authorName String
+  createdAt  DateTime @default(now())
+}
+
+model Booking {
+  id                 Int      @id @default(autoincrement())
+  customerId         Int
+  customer           Customer @relation(fields: [customerId], references: [id])
+  chefId             Int
+  chef               Chef     @relation(fields: [chefId], references: [id])
+  menuId             Int?
+  eventDate          DateTime
+  guestCount         Int
+  status             String   // "pending" | "confirmed" | "cancelled"
+  dietaryNotes       String?
+  perHeadPence       Int
+  subtotalPence      Int
+  minSpendTopUpPence Int
+  serviceFeePence    Int
+  totalPence         Int
+  createdAt          DateTime @default(now())
+}
